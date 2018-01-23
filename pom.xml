@@ -10,6 +10,7 @@
 	<name>Syber Plugin</name>
 
 	<dependencies>
+		<!-- Required for plugin operations -->
 		<dependency>
 			<groupId>org.apache.maven</groupId>
 			<artifactId>maven-plugin-api</artifactId>
@@ -23,7 +24,54 @@
 			<version>3.4</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<!-- Require for Goals -->
+		<!-- https://mvnrepository.com/artifact/org.codehaus.mojo/hibernate3-maven-plugin -->
+		        <dependency>
+            <groupId>org.codehaus.mojo.hibernate3</groupId>
+            <artifactId>maven-hibernate3-api</artifactId>
+            <version>${hibernate3.plugin.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.mojo.hibernate3</groupId>
+            <artifactId>maven-hibernate3-jdk15</artifactId>
+            <version>${hibernate3.plugin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.mojo.hibernate3</groupId>
+            <artifactId>maven-hibernate3-jdk14</artifactId>
+            <version>${hibernate3.plugin.version}</version>
+        </dependency>
+        <!-- The hibernate3 plugin requires Hibernate 3 to work with -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>3.3.1.GA</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>3.4.0.GA</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.maven</groupId>
+            <artifactId>maven-core</artifactId>
+            <version>2.0.8</version>
+            <scope>test</scope>
+        </dependency>
+
 	</dependencies>
+	
+	<properties>
+        <hibernate3.plugin.version>2.2</hibernate3.plugin.version>
+        <invoker.debug>false</invoker.debug>
+    </properties>
 	<build>
 		<pluginManagement>
 			<plugins>
@@ -72,8 +120,8 @@
 
 			</plugins>
 		</pluginManagement>
-		
-		
+
+
 	</build>
 
 </project>

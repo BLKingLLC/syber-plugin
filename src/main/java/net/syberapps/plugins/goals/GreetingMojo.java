@@ -1,4 +1,4 @@
-package net.syberapps.plugins.syber;
+package net.syberapps.plugins.goals;
  
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
