@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.odysystems</groupId>
+	<artifactId>breerabit</artifactId>
+	<packaging>pom</packaging>
+	<version>0.6.1</version>
+	<name>Bre'er Rabbit Payroll Transformation Web Service</name>
+
+	<parent>
+		<groupId>org.appfuse</groupId>
+		<artifactId>appfuse</artifactId>
+		<version>3.5.0</version>
+	</parent>
+
+	<repositories>
+		<repository>
+			<id>appfuse-snapshots</id>
+			<url>https://oss.sonatype.org/content/repositories/appfuse-snapshots</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+	</repositories>
+
+	<modules>
+		<module>core</module>
+		<module>web</module>
+		<module>translator</module>
+	</modules>
+
+	<profiles>
+		<profile>
+			<id>localDB</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<amp.genericCore>false</amp.genericCore>
+				<amp.fullSource>true</amp.fullSource>
+				<dao.framework>hibernate</dao.framework>
+				<db.name>breerabit</db.name>
+				<web.framework>spring</web.framework>
+				<!-- Framework/Plugin versions -->
+				<appfuse.version>3.5.0</appfuse.version>
+				<java.version>1.7</java.version>
+				<jdbc.url>jdbc:mysql://192.168.212.129:3306/brabbit</jdbc.url>
+				<jdbc.username>bob</jdbc.username>
+				<jdbc.password>password</jdbc.password>
+
+
+			</properties>
+		</profile>
+
+		<profile>
+			<id>AWSProduction</id>
+			<properties>
+				<amp.genericCore>false</amp.genericCore>
+				<amp.fullSource>true</amp.fullSource>
+				<dao.framework>hibernate</dao.framework>
+				<db.name>breerabit</db.name>
+				<web.framework>spring</web.framework>
+				<!-- Framework/Plugin versions -->
+				<appfuse.version>3.5.0</appfuse.version>
+				<java.version>1.7</java.version>
+			</properties>
+			<build>
+				<finalName>syberman</finalName>
+				<plugins>
+					<plugin>
+						<artifactId>maven-war-plugin</artifactId>
+						<version>2.4</version>
+						<configuration>
+							<outputDirectory>webapps</outputDirectory>
+							<warName>ROOT</warName>
+						</configuration>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+
+
+	</profiles>
+	<build>
+		<plugins>
+			
+ <plugin>
+        <groupId>syberapps.net</groupId>
+        <artifactId>syber-plugin</artifactId>
+        <version>0.1-SNAPSHOT</version>
+	<configuration></configuration>
+<executions>
+                    <execution>
+                        <goals>
+                            <goal>GenSampleData</goal>
+                        </goals>
+                    </execution>
+                </executions>
+      </plugin>
+
+<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<configuration>
+					<nonFilteredFileExtensions>
+						<nonFilteredFileExtension>p12</nonFilteredFileExtension>
+						<nonFilteredFileExtension>xml</nonFilteredFileExtension>
+					</nonFilteredFileExtensions>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.appfuse.plugins</groupId>
+				<artifactId>appfuse-maven-plugin</artifactId>
+				<version>${appfuse.version}</version>
+				<configuration>
+					<componentProperties>
+						<implementation>annotationconfiguration</implementation>
+					</componentProperties>
+					<genericCore>${amp.genericCore}</genericCore>
+					<fullSource>${amp.fullSource}</fullSource>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>${jdbc.groupId}</groupId>
+						<artifactId>${jdbc.artifactId}</artifactId>
+						<version>${jdbc.version}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+<!-- 			<plugin>
+				<groupId>de.juplo</groupId>
+				<artifactId>hibernate4-maven-plugin</artifactId>
+				<version>1.1.1</version>
+			</plugin> -->
+		</plugins>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<filtering>true</filtering>
+			</testResource>
+		</testResources>
+	</build>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.subethamail</groupId>
+			<artifactId>subethasmtp-wiser</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<dependencyManagement>
+		<dependencies>
+<!-- 			<dependency>
+				<groupId>de.juplo</groupId>
+				<artifactId>hibernate4-maven-plugin</artifactId>
+				<version>1.1.1</version>
+				<scope>provided</scope>
+			</dependency> -->
+		</dependencies>
+	</dependencyManagement>
+
+
+	<scm>
+		<connection>scm:git:git@github.com:BLKingLLC/breerRabbit.git</connection>
+		<url>scm:git:git@github.com:BLKingLLC/breerRabbit.git</url>
+		<developerConnection>scm:git:git@github.com:BLKingLLC/breerRabbit.git</developerConnection>
+		<tag>HEAD</tag>
+	</scm>
+
+	<organization>
+		<name>BL King Consulting LLC</name>
+		<url>www.blking.net</url>
+	</organization>
+</project>

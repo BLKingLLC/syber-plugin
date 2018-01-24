@@ -1,0 +1,43 @@
+<html>
+<body>
+<h1>Odyssey Email Instructions</h1>
+
+<strong>Your Gmail Login and Odyssey email is: ${userEmail}
+
+Employee Id #: ${empID}  </strong>
+
+<p>
+You can sign in to Odyssey email by clicking this! <a href="www.gmail.com">www.gmail.com</a>
+
+Your password will be sent to ${altEmail} in a separate message.
+</p>
+
+We also have an Odyssey help website if you have questions about using our services: <a href="http://help.odysseyconsult.com">http://help.odysseyconsult.com</a>  or you can email help@odysseyconsult.com from any email account.  
+
+
+<h2>Project Odyssey</h2> 
+<p>
+After you receive the Project Odyssey registration email, you'll be able to login to Project Odyssey by clicking the "g+ Sign in With Google" button.
+
+</p>
+<br>
+<h2>On-Boarding</h2>
+<p>
+You've completed your on-boarding package and you're ready for your first day of work with Odyssey.  Next you will need to log-in to our HRIS, Ultipro, and select your benefits.
+You can log in to Ultipro by going to <a href="http://up.odysseyconsult.com">http://up.odysseyconsult.com</a>
+
+
+Team Member Services is here to help and we love doing it so let us know if we can!
+
+help@odysseyconsult.com
+
+</p>
+
+<p>
+<a href="https://goo.gl/Ta4q9N"> To help you get started we've prepared a helpful presentation. Click here to get started.</a>
+The above link may not be readable from your government workstation but it contains further information on accessing your timecard, getting a credit card and benefits information. 
+</p>
+
+
+</body>
+</html>

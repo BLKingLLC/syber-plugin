@@ -9,76 +9,125 @@
 
 	<name>Syber Plugin</name>
 
-	<dependencies>
-		<!-- Required for plugin operations -->
-		<dependency>
-			<groupId>org.apache.maven</groupId>
-			<artifactId>maven-plugin-api</artifactId>
-			<version>3.0</version>
-		</dependency>
+	<properties>
+		<maven.version>3.5.2</maven.version>
+		<hibernate3.plugin.version>2.2</hibernate3.plugin.version>
+		<invoker.debug>false</invoker.debug>
+	</properties>
 
-		<!-- dependencies to annotations -->
+	<dependencies>
+		<!-- Baeic Stuff -->
 		<dependency>
 			<groupId>org.apache.maven.plugin-tools</groupId>
 			<artifactId>maven-plugin-annotations</artifactId>
-			<version>3.4</version>
+			<version>3.5</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-core</artifactId>
+			<version>3.5.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-artifact</artifactId>
+			<version>${maven.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-compat</artifactId>
+			<version>${maven.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.maven.plugin-testing</groupId>
+			<artifactId>maven-plugin-testing-harness</artifactId>
+			<scope>test</scope>
+			<version>3.3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-slf4j-impl -->
+		<dependency>
+			<groupId>org.apache.logging.log4j</groupId>
+			<artifactId>log4j-slf4j-impl</artifactId>
+			<version>2.10.0</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-api -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+			<version>1.7.25</version>
+		</dependency>
 
-		<!-- Require for Goals -->
-		<!-- https://mvnrepository.com/artifact/org.codehaus.mojo/hibernate3-maven-plugin -->
-		        <dependency>
-            <groupId>org.codehaus.mojo.hibernate3</groupId>
-            <artifactId>maven-hibernate3-api</artifactId>
-            <version>${hibernate3.plugin.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.slf4j</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-        <dependency>
-            <groupId>org.codehaus.mojo.hibernate3</groupId>
-            <artifactId>maven-hibernate3-jdk15</artifactId>
-            <version>${hibernate3.plugin.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.codehaus.mojo.hibernate3</groupId>
-            <artifactId>maven-hibernate3-jdk14</artifactId>
-            <version>${hibernate3.plugin.version}</version>
-        </dependency>
-        <!-- The hibernate3 plugin requires Hibernate 3 to work with -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-core</artifactId>
-            <version>3.3.1.GA</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>3.4.0.GA</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.maven</groupId>
-            <artifactId>maven-core</artifactId>
-            <version>2.0.8</version>
-            <scope>test</scope>
-        </dependency>
+		<!-- Other Stuff * * * -->
+
+		<!-- https://mvnrepository.com/artifact/commons-logging/commons-logging -->
+		<dependency>
+			<groupId>commons-logging</groupId>
+			<artifactId>commons-logging</artifactId>
+			<version>1.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.mojo.hibernate3</groupId>
+			<artifactId>maven-hibernate3-api</artifactId>
+			<version>${hibernate3.plugin.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>*</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.mojo.hibernate3</groupId>
+			<artifactId>maven-hibernate3-jdk15</artifactId>
+			<version>${hibernate3.plugin.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.mojo.hibernate3</groupId>
+			<artifactId>maven-hibernate3-jdk14</artifactId>
+			<version>${hibernate3.plugin.version}</version>
+		</dependency>
+		<!-- The hibernate3 plugin requires Hibernate 3 to work with -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>3.3.1.GA</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>3.4.0.GA</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-search</artifactId>
+			<version>4.5.1.Final</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.hibernate</groupId>
+					<artifactId>hibernate-core</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
 
 	</dependencies>
-	
-	<properties>
-        <hibernate3.plugin.version>2.2</hibernate3.plugin.version>
-        <invoker.debug>false</invoker.debug>
-    </properties>
+
+
 	<build>
 		<pluginManagement>
 			<plugins>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-plugin-plugin</artifactId>
-					<version>3.2</version>
+					<version>3.5</version>
 					<configuration>
 						<skipErrorNoDescriptorsFound>true</skipErrorNoDescriptorsFound>
 					</configuration>

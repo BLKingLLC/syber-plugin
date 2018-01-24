@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  MapForce Project File  -->
+<Project Expanded="Yes" Type="Root" language="java" OutputDir="output\" Title="UltiProFirst" OutputName="UltiProFirst" Version="6">
+	<Folder FolderName="Web Services Folder" Expanded="Yes" Type="WebServiceFolder">
+		<File Expanded="Yes" Type="WebServiceRoot" FilePath="https://service4.ultipro.com/services/EmployeeGlobalNewHire">
+			<Folder FolderName="{http://tempuri.org/}Proxy_IEmployeeGlobalNewHire" Expanded="Yes" Type="WebServiceService" WSQualifiedName="{http://tempuri.org/}Proxy_IEmployeeGlobalNewHire">
+				<Folder FolderName="WSHttpBinding_IEmployeeGlobalNewHire" Expanded="Yes" Type="WebServicePort" WSQualifiedName="WSHttpBinding_IEmployeeGlobalNewHire">
+					<Folder FolderName="{http://www.ultipro.com/services/employeeglobalnewhire}Ping" Expanded="Yes" Type="WebServiceOperation" WSQualifiedName="{http://www.ultipro.com/services/employeeglobalnewhire}Ping">
+						<File Type="Mapping" FilePath="Ping.mfd"/>
+					</Folder>
+					<Folder FolderName="{http://www.ultipro.com/services/employeeglobalnewhire}GetGlobalEmployeeByEmployeeIdentifier" Expanded="Yes" Type="WebServiceOperation" WSQualifiedName="{http://www.ultipro.com/services/employeeglobalnewhire}GetGlobalEmployeeByEmployeeIdentifier">
+						<File Type="Mapping" FilePath="GetGlobalEmployeeByEmployeeIdentifier.mfd"/>
+					</Folder>
+					<Folder FolderName="{http://www.ultipro.com/services/employeeglobalnewhire}NewHireGlobal" Expanded="Yes" Type="WebServiceOperation" WSQualifiedName="{http://www.ultipro.com/services/employeeglobalnewhire}NewHireGlobal">
+						<File Type="Mapping" FilePath="NewHireGlobal.mfd"/>
+					</Folder>
+					<Folder FolderName="{http://www.ultipro.com/services/employeeglobalnewhire}UpdateGlobalEmployee" Expanded="Yes" Type="WebServiceOperation" WSQualifiedName="{http://www.ultipro.com/services/employeeglobalnewhire}UpdateGlobalEmployee">
+						<File Type="Mapping" FilePath="UpdateGlobalEmployee.mfd"/>
+					</Folder>
+				</Folder>
+			</Folder>
+		</File>
+	</Folder>
+</Project>

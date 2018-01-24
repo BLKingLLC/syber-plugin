@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--  MapForce Project File  -->
+<Project Expanded="Yes" Type="Root" language="java" OutputDir="C:\Users\Bobby\Documents\GitHub\breerRabbit\translator\src\main\java" Title="BreerRabbit" JavaPackageName="com.odysseyconsult.breerabbit.translator" OutputName="BreerRabbit" Version="6">
+	<Folder FolderName="Mapping Folder" Expanded="Yes" Type="MappingFolder">
+		<File Type="Mapping" FilePath="Payroll.mfd"/>
+		<File Type="Mapping" FilePath="Payroll2.mfd"/>
+	</Folder>
+</Project>
