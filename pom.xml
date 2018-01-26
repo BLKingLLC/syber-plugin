@@ -39,6 +39,7 @@
 			<groupId>org.apache.maven</groupId>
 			<artifactId>maven-compat</artifactId>
 			<version>${maven.version}</version>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven.plugin-testing</groupId>
@@ -116,9 +117,49 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		<!-- Now comes the good stuff -->
+		<!-- https://mvnrepository.com/artifact/org.freemarker/freemarker -->
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>2.3.23</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.maven.archetype/archetype-common -->
+		<dependency>
+			<groupId>org.apache.maven.archetype</groupId>
+			<artifactId>archetype-common</artifactId>
+			<version>2.2</version>
+		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.appfuse.archetypes/appfuse-core-archetype -->
+		<dependency>
+			<groupId>org.appfuse.archetypes</groupId>
+			<artifactId>appfuse-core-archetype</artifactId>
+			<version>3.5.0</version>
+		</dependency>
 
+		<!-- https://mvnrepository.com/artifact/org.apache.maven.plugin-testing/maven-plugin-testing-tools -->
+		<dependency>
+			<groupId>org.apache.maven.plugin-testing</groupId>
+			<artifactId>maven-plugin-testing-tools</artifactId>
+			<version>3.3.0</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.ant/ant -->
+		<dependency>
+			<groupId>org.apache.ant</groupId>
+			<artifactId>ant</artifactId>
+			<version>1.10.1</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.apache.maven/maven-model-builder -->
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-model-builder</artifactId>
+			<version>3.3.3</version>
+		</dependency>
 	</dependencies>
+
 
 
 	<build>
