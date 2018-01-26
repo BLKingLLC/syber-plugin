@@ -29,11 +29,13 @@ public class SampleData extends AbstractMojo {
 	public MavenProject project;
 	
 	private List<File> entities = new ArrayList<File>();
+	int limiter = 0;
 	
 	private void addEntity(File file) {
 		this.entities.add(file);
+		getLog().info("size is now " + entities.size());
 	}
-	protected List<File> getEntities() {
+	protected List<File> getList() {
 		return entities;
 	}
 
@@ -97,6 +99,8 @@ public class SampleData extends AbstractMojo {
 	}
 	
 	public void traverse(List<File> files) {
+		getLog().info("I've done this " + limiter + " times.");
+		limiter++;
 	    for (File file : files) {
 	        if (file.isDirectory()) {
 	            
@@ -104,6 +108,7 @@ public class SampleData extends AbstractMojo {
 	        } else {
 	            try {
 					if(scan(file)) {
+						getLog().info("adding " + file.getName() + " to entities");
 						addEntity(file);
 					}
 				} catch (IOException e) {
@@ -145,7 +150,7 @@ public class SampleData extends AbstractMojo {
 		for (File file : pojos) {
 			names.add(file.getName());
 		}
-		return null;
+		return names;
 	}
 
 	@Override
@@ -157,6 +162,7 @@ public class SampleData extends AbstractMojo {
 
 
 	protected Boolean scan(File file) throws IOException {
+		getLog().info("Scanning " + file.getName());
 		BufferedReader buf = new BufferedReader(new FileReader(file));
 
 		String line = buf.readLine();
@@ -166,8 +172,12 @@ public class SampleData extends AbstractMojo {
 			line = buf.readLine();
 		}
 		String fileAsString = sb.toString();
+		if(file.getName().equals("Person.java")) {
+			getLog().info(fileAsString);
+		}
 
-		if (fileAsString.contains("@Entity") && fileAsString.contains("@Table")) {
+		if (fileAsString.contains("@Entity")) {
+			getLog().info(file.getName() + " contains entity.");
 			return true;
 
 		}
