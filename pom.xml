@@ -13,39 +13,92 @@
 		<maven.version>3.5.2</maven.version>
 		<hibernate3.plugin.version>2.2</hibernate3.plugin.version>
 		<invoker.debug>false</invoker.debug>
+		   <maven.compiler.source>1.7</maven.compiler.source>
+    <maven.compiler.target>1.7</maven.compiler.target>
+		
 	</properties>
 
 	<dependencies>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.maven/maven-plugin-api -->
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-plugin-api</artifactId>
+			<version>3.5.2</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.maven</groupId>
+					<artifactId>maven-artifact</artifactId>
+				</exclusion>
+				
+			</exclusions>
+			<!-- <scope>compile</scope> -->
+		</dependency>
+
+
+		<!-- https://mvnrepository.com/artifact/org.apache.maven/maven-project -->
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-project</artifactId>
+			<version>2.2.1</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.maven</groupId>
+					<artifactId>maven-artifact</artifactId>
+				</exclusion>
+				<exclusion>
+					<!-- https://mvnrepository.com/artifact/org.apache.maven/maven-artifact-manager -->
+					<groupId>org.apache.maven</groupId>
+					<artifactId>maven-artifact-manager</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.apache.maven/maven-artifact -->
+		<dependency>
+			<groupId>org.apache.maven</groupId>
+			<artifactId>maven-artifact</artifactId>
+			<version>3.2.5</version>
+			<scope>test</scope>
+		</dependency>
+
+
+		<!-- <exclusions> <exclusion> <groupId>org.apache.maven</groupId> <artifactId>maven-project</artifactId> 
+			</exclusion> </exclusions> -->
 		<!-- Baeic Stuff -->
 		<dependency>
 			<groupId>org.apache.maven.plugin-tools</groupId>
 			<artifactId>maven-plugin-annotations</artifactId>
-			<version>3.5</version>
-			<scope>provided</scope>
+			<version>3.5.1</version>
+			<exclusions>
+				<exclusion>  <!-- declare the exclusion here -->
+					<groupId>org.apache.maven</groupId>
+					<artifactId>maven-artifact</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
-		<dependency>
-			<groupId>org.apache.maven</groupId>
-			<artifactId>maven-core</artifactId>
-			<version>3.5.2</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.maven</groupId>
-			<artifactId>maven-artifact</artifactId>
-			<version>${maven.version}</version>
-			<scope>provided</scope>
-		</dependency>
+		<!-- <dependency> <groupId>org.apache.maven</groupId> <artifactId>maven-core</artifactId> 
+			<version>3.5.2</version> <scope>test</scope> </dependency> -->
+		<!-- <dependency> <groupId>org.apache.maven</groupId> <artifactId>maven-artifact</artifactId> 
+			<version>${maven.version}</version> <scope>provided</scope> </dependency> -->
 		<dependency>
 			<groupId>org.apache.maven</groupId>
 			<artifactId>maven-compat</artifactId>
 			<version>${maven.version}</version>
 			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.maven</groupId>
+					<artifactId>maven-artifact</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.maven.plugin-testing</groupId>
 			<artifactId>maven-plugin-testing-harness</artifactId>
 			<scope>test</scope>
 			<version>3.3.0</version>
+			
 		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
@@ -74,6 +127,8 @@
 			<artifactId>commons-logging</artifactId>
 			<version>1.2</version>
 		</dependency>
+		
+		
 		<dependency>
 			<groupId>org.codehaus.mojo.hibernate3</groupId>
 			<artifactId>maven-hibernate3-api</artifactId>
@@ -83,17 +138,55 @@
 					<groupId>org.slf4j</groupId>
 					<artifactId>*</artifactId>
 				</exclusion>
+				<exclusion>  <!-- declare the exclusion here -->
+					<groupId>org.apache.maven</groupId>
+					<artifactId>maven-artifact</artifactId>
+				</exclusion>
+
+				<exclusion>
+					<groupId>org.apache.maven</groupId>
+					<artifactId>maven-project</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.maven</groupId>
+					<artifactId>maven-plugin-api</artifactId>
+				</exclusion>
 			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.codehaus.mojo.hibernate3</groupId>
 			<artifactId>maven-hibernate3-jdk15</artifactId>
 			<version>${hibernate3.plugin.version}</version>
+			<exclusions>
+				<exclusion>  <!-- declare the exclusion here -->
+					<groupId>org.apache.maven</groupId>
+					<artifactId>maven-artifact</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.maven</groupId>
+					<artifactId>maven-project</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.maven</groupId>
+					<artifactId>maven-plugin-api</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.codehaus.mojo.hibernate3</groupId>
 			<artifactId>maven-hibernate3-jdk14</artifactId>
 			<version>${hibernate3.plugin.version}</version>
+			<exclusions>
+
+				<exclusion>
+					<groupId>org.apache.maven</groupId>
+					<artifactId>maven-project</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.maven</groupId>
+					<artifactId>maven-plugin-api</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<!-- The hibernate3 plugin requires Hibernate 3 to work with -->
 		<dependency>
@@ -129,6 +222,13 @@
 			<groupId>org.apache.maven.archetype</groupId>
 			<artifactId>archetype-common</artifactId>
 			<version>2.2</version>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.maven</groupId>
+					<artifactId>maven-project</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.appfuse.archetypes/appfuse-core-archetype -->
@@ -136,38 +236,61 @@
 			<groupId>org.appfuse.archetypes</groupId>
 			<artifactId>appfuse-core-archetype</artifactId>
 			<version>3.5.0</version>
+			<scope>test</scope>
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/org.apache.maven.plugin-testing/maven-plugin-testing-tools -->
-		<dependency>
-			<groupId>org.apache.maven.plugin-testing</groupId>
-			<artifactId>maven-plugin-testing-tools</artifactId>
-			<version>3.3.0</version>
-			<scope>test</scope>
-		</dependency>
+		<!-- <dependency> <groupId>org.apache.maven.plugin-testing</groupId> <artifactId>maven-plugin-testing-tools</artifactId> 
+			<version>3.3.0</version> <scope>test</scope> </dependency> -->
 
 		<!-- https://mvnrepository.com/artifact/org.apache.ant/ant -->
 		<dependency>
 			<groupId>org.apache.ant</groupId>
 			<artifactId>ant</artifactId>
-			<version>1.10.1</version>
+			<version>1.8.0</version>
 		</dependency>
-		        <dependency>
-            <groupId>org.apache.ant</groupId>
-            <artifactId>ant-nodeps</artifactId>
-            <version>1.8.1</version>
-        </dependency>
+		<dependency>
+			<groupId>org.apache.ant</groupId>
+			<artifactId>ant-nodeps</artifactId>
+			<version>1.8.0</version>
+		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.maven/maven-model-builder -->
+
 		<dependency>
 			<groupId>org.apache.maven</groupId>
 			<artifactId>maven-model-builder</artifactId>
 			<version>3.3.3</version>
+			<scope>test</scope>
 		</dependency>
+
+		<!-- <dependency> <groupId>org.codehaus.plexus</groupId> <artifactId>plexus-interactivity-api</artifactId> 
+			<version>1.0-alpha-4</version> <exclusions> <exclusion> <groupId>plexus</groupId> 
+			<artifactId>plexus-utils</artifactId> </exclusion> </exclusions> </dependency> 
+			<dependency> <groupId>org.codehaus.plexus</groupId> <artifactId>plexus-utils</artifactId> 
+			<version>1.5.6</version> </dependency> -->
 	</dependencies>
 
 
 
 	<build>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>**/*.ftl</include>
+					<include>**/*.java</include>
+					<include>**/*.xml</include>
+					<include>**/annotationconfiguration/*.xml</include>
+				</includes>
+			</testResource>
+		</testResources>
 		<pluginManagement>
 			<plugins>
 				<plugin>

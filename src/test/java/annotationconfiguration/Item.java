@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class Item {
 
     Long id;
-    Person Person;
+    PurplePerson Person;
     String name;
 
 
@@ -37,11 +37,11 @@ public class Item {
 
     @ManyToOne()
     @JoinColumn(name = ("username"))
-    public Person getPerson() {
+    public PurplePerson getPerson() {
         return Person;
     }
 
-    public void setPerson(Person person) {
+    public void setPerson(PurplePerson person) {
         Person = person;
     }
 }

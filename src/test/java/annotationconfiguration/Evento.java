@@ -5,7 +5,7 @@ import java.math.BigInteger;
 import java.sql.Timestamp;
 
 @Entity
-//@IdClass(EventoPK.class)
+@IdClass(EventoPK.class)
 @Table(name = "Evento")
 public class Evento {
     private Integer tipoevento;

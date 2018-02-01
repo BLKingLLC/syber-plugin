@@ -13,7 +13,7 @@ import java.util.List;
 
 @Entity(name = "Persona")
 @Table(name = "person")
-public class Person {
+public class PurplePerson {
     private Long personId;
     private Date creationDate;
     private String email;

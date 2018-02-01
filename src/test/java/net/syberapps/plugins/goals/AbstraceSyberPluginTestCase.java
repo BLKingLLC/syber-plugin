@@ -10,35 +10,26 @@ import java.util.Properties;
 import org.apache.maven.archetype.ArchetypeGenerationRequest;
 import org.apache.maven.archetype.ArchetypeGenerationResult;
 import org.apache.maven.archetype.ArchetypeManager;
-import org.apache.maven.artifact.Artifact;
 import org.apache.maven.artifact.repository.ArtifactRepository;
-import org.apache.maven.artifact.repository.MavenArtifactRepository;
+import org.apache.maven.artifact.repository.ArtifactRepositoryFactory;
 import org.apache.maven.artifact.repository.layout.DefaultRepositoryLayout;
 import org.apache.maven.model.Build;
 import org.apache.maven.model.Model;
 import org.apache.maven.model.Plugin;
-import org.apache.maven.model.PluginConfiguration;
 import org.apache.maven.model.PluginExecution;
 import org.apache.maven.model.building.DefaultModelBuilder;
 import org.apache.maven.model.building.DefaultModelBuilderFactory;
-import org.apache.maven.model.building.DefaultModelBuildingRequest;
 import org.apache.maven.model.building.ModelBuildingException;
-import org.apache.maven.model.building.ModelBuildingResult;
 import org.apache.maven.model.building.Result;
 import org.apache.maven.model.io.DefaultModelWriter;
-import org.apache.maven.plugin.lifecycle.Execution;
 import org.apache.maven.plugin.testing.AbstractMojoTestCase;
-import org.apache.maven.plugin.testing.ArtifactStubFactory;
-import org.apache.maven.plugin.testing.stubs.ArtifactStub;
 import org.apache.maven.plugin.testing.stubs.MavenProjectStub;
 import org.apache.maven.project.MavenProject;
-import org.apache.maven.project.ProjectUtils;
-import org.apache.maven.project.artifact.PluginArtifact;
-import org.apache.maven.shared.test.plugin.ProjectTool;
-import org.apache.maven.shared.test.plugin.TestToolsException;
 import org.codehaus.plexus.util.FileUtils;
 import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.xml.Xpp3Dom;
+
+import net.syberapps.plugins.exporter.HibernateExporterMojo;
 
 public abstract class AbstraceSyberPluginTestCase extends AbstractMojoTestCase {
 	/*
@@ -56,23 +47,22 @@ public abstract class AbstraceSyberPluginTestCase extends AbstractMojoTestCase {
 		FileUtils.deleteDirectory(getTestFile(targetFolder));
 	}
 
-	/*
-	 * protected HibernateExporterMojo getHibernateMojo(String goal, String
-	 * implementation) throws Exception { String path = "target/test-classes/" +
-	 * implementation + "/" + goal + "-config.xml"; if (genericCore) { path =
-	 * "target/test-classes/" + implementation + "/generic-config.xml"; }
-	 * HibernateExporterMojo mojo = (HibernateExporterMojo) lookupMojo(goal,
-	 * getTestFile(path)); mojo.getLog().info("executing: " +
-	 * getTestFile(path).getPath()); //setVariableValueToObject(mojo, "project",
-	 * getMavenProject());
-	 * 
-	 * // disableInstallation to prevent installation
-	 * System.setProperty("disableInstallation", "true");
-	 * 
-	 * mojo.setProject(getMavenProject());
-	 * 
-	 * return mojo; }
-	 */
+	protected HibernateExporterMojo getHibernateMojo(String goal, String implementation) throws Exception {
+		String path = "target/test-classes/" + implementation + "/" + goal + "-config.xml";
+		if (true) {
+			path = "target/test-classes/" + implementation + "/generic-config.xml";
+		}
+		HibernateExporterMojo mojo = (HibernateExporterMojo) lookupMojo(goal, getTestFile(path));
+		mojo.getLog().info("executing: " + getTestFile(path).getPath()); 
+		setVariableValueToObject(mojo, "project", getMavenProject());
+
+		// disableInstallation to prevent installation
+		System.setProperty("disableInstallation", "true");
+
+		mojo.setProject(getMavenProject());
+
+		return mojo;
+	}
 
 	/*
 	 * protected InstallArtifactsMojo getInstallMojo(String goal, String
@@ -152,7 +142,9 @@ public abstract class AbstraceSyberPluginTestCase extends AbstractMojoTestCase {
 		 * ArtifactRepositoryLayout lt = new DefaultRepositoryLayout();
 		 */
 
-		ArtifactRepository localRepository = new MavenArtifactRepository("local", mavenRepoLocal,
+		ArtifactRepositoryFactory fac = (ArtifactRepositoryFactory) lookup(ArtifactRepositoryFactory.ROLE);
+
+		ArtifactRepository localRepository = fac.createArtifactRepository("local", mavenRepoLocal,
 				new DefaultRepositoryLayout(), null, null);
 
 		assertNotNull(localRepository);
@@ -176,13 +168,10 @@ public abstract class AbstraceSyberPluginTestCase extends AbstractMojoTestCase {
 		} catch (NullPointerException e) {
 			// Means it worked properly.
 		}
-		
-		
+
 		return project;
 	}
 
-
-	
 	protected void print(String str) {
 		System.out.println(str);
 	}
@@ -198,6 +187,17 @@ public abstract class AbstraceSyberPluginTestCase extends AbstractMojoTestCase {
 		System.out.println(str);
 	}
 
+	protected String fileToString(File file) {
+		String str = new String();
+		try {
+			str = org.apache.commons.io.FileUtils.readFileToString(file);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return str;
+	}
+
 	private Plugin getPlugin() {
 		Plugin plugin = new Plugin();
 		/*
@@ -209,54 +209,81 @@ public abstract class AbstraceSyberPluginTestCase extends AbstractMojoTestCase {
 		plugin.setGroupId("syberapps.net");
 		plugin.setArtifactId("syber-plugin");
 		plugin.setVersion("0.1-SNAPSHOT");
-		
+
 		PluginExecution ex = new PluginExecution();
 		ex.addGoal("GenSampleData");
 		List<PluginExecution> exes = new ArrayList<PluginExecution>();
 		exes.add(ex);
-		
-		
-		
-		
-		Xpp3Dom configDom = new Xpp3Dom("configuration");
-		configDom.setAttribute("url", new String());
-		
-		plugin.setConfiguration(configDom);
-		
+
+		/*
+		 * <configuration> <components> <component> <name>gen</name>
+		 * <outputDirectory>target/appfuse/generated</outputDirectory>
+		 * <implementation>annotationconfiguration</implementation> </component>
+		 * </components> <componentProperties>
+		 * <configurationfile>target/test-classes/annotationconfiguration/hibernate.cfg.
+		 * xml</configurationfile> </componentProperties> </configuration>
+		 */
+
 		plugin.setExecutions(exes);
-		
-		
 
-		Xpp3Dom conf = new Xpp3Dom("configuration");
+		// Compiler
+		Plugin pluginCompiler = new Plugin();
+		pluginCompiler.setGroupId("syberapps.net");
+		pluginCompiler.setArtifactId("syber-plugin");
+		pluginCompiler.setVersion("0.1-SNAPSHOT");
+
+		Xpp3Dom pcComponentProps = new Xpp3Dom("componentProperties");
+		addConfig(pcComponentProps, "configurationfile",
+				"target/test-classes/annotationconfiguration/hibernate.cfg.xml");
 		
-		plugin.setConfiguration(conf);
+		Xpp3Dom pComponent = new Xpp3Dom("component");
+		/*
+		 * <component> <name>gen</name>
+		 * <outputDirectory>target/appfuse/generated</outputDirectory>
+		 * <implementation>annotationconfiguration</implementation> </component>
+		 */
+		addConfig(pComponent, "name", "GenSampleData");
+		addConfig(pComponent, "outputDirectory", "GenSampleData");
+		addConfig(pComponent, "implementation", "annotationconfiguration");
 
+		// pComponent.addChild(pcComponentProps);
+		Xpp3Dom pcComponents = new Xpp3Dom("components");
+		pcComponents.addChild(pComponent);
+		Xpp3Dom pluginConfig = new Xpp3Dom("configuration");
+		pluginConfig.addChild(pcComponents);
+		pluginConfig.addChild(pcComponentProps);
 
-		return plugin;
+		// addConfig(pluginConfig, "components", "1.6");
+		pluginCompiler.setConfiguration(pluginConfig);
+
+		return pluginCompiler;
 
 	}
-	
+
+	private void addConfig(Xpp3Dom config, String key, String value) {
+		Xpp3Dom child = new Xpp3Dom(key);
+		child.setValue(value);
+		config.addChild(child);
+	}
+
 	protected Model build(File pom) throws ModelBuildingException {
 		DefaultModelBuilder builder = new DefaultModelBuilderFactory().newInstance();
 		Result<? extends Model> thang = builder.buildRawModel(pom, 0, false);
 		Model otherThang = thang.get();
 		String artid = otherThang.getArtifactId();
-		print("path is :: " + otherThang.getProjectDirectory().getPath());
+		print("path is :: " + otherThang.toString());
 		return otherThang;
 
-		
 	}
-	
+
 	protected Model addPlugin(Model model, File file) throws IOException {
 		Build build = model.getBuild();
 		build.addPlugin(getPlugin());
 		model.setBuild(build);
 		DefaultModelWriter writer = new DefaultModelWriter();
 		writer.write(file, null, model);
-		
+
 		return model;
 	}
-	
-    
-	
+
 }
